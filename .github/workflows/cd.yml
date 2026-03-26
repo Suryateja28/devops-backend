@@ -1,0 +1,23 @@
+name: Deploy to AWS EC2
+
+on:
+  workflow_run:
+    workflows: ["Docker Image CI"]
+    types:
+      - completed
+
+jobs:
+  deploy:
+    runs-on: ubuntu-latest
+
+    steps:
+      - name: SSH and deploy
+        uses: appleboy/ssh-action@v1.0.3
+        with:
+          host: ${{ secrets.EC2_HOST }}
+          username: ${{ secrets.EC2_USER }}
+          key: ${{ secrets.EC2_SSH_KEY }}
+          script: |
+            docker pull suryeteja28/backend-devops:latest
+            docker rm -f backend-devops || true
+            docker run -d -p 80:80 --name backend-devops suryeteja28/backend-devops:latest
