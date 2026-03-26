@@ -1,18 +1,12 @@
+// index.js
 const express = require('express');
 const app = express();
 const port = 3000;
 
-app.use(express.json());
-console.log('Server is starting... hello world');
 app.get('/', (req, res) => {
-res.send('Hello Suryateja Great to see you here!');
-});
-app.post('/data', (req, res) => {
-const data = req.body;
-console.log('Received data:', data);
-res.send('Data received successfully!');
+  res.send('Hello, Surya welcome to Docker world!');
 });
 
 app.listen(port, () => {
-console.log(`Server is running on http://localhost:${port}`);
+  console.log(`Server running at http://localhost:${port}`);
 });
